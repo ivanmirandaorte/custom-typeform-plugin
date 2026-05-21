@@ -1,0 +1,387 @@
+/* PrEP Quiz Styles */
+
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--bg:            #942020;
+	--white:         #ffffff;
+	--opt-bg:        rgba(255,255,255,0.08);
+	--opt-border:    rgba(255,255,255,0.20);
+	--opt-hover-bg:  rgba(255,255,255,0.14);
+	--opt-sel-bg:    rgba(255,255,255,0.22);
+	--badge-bg:      rgba(148,32,32,0.50);
+	--font:          'Inter', sans-serif;
+}
+
+#prep-quiz {
+	min-height: 100vh;
+	background: var(--bg);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 90px 60px;
+	position: relative;
+	overflow: hidden;
+	font-family: var(--font);
+	-webkit-font-smoothing: antialiased;
+}
+
+/* ── Progress bar ── */
+.pq-progress {
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
+	height: 4px;
+	background: rgba(255,255,255,0.18);
+	z-index: 50;
+}
+
+.pq-progress-fill {
+	height: 100%;
+	background: var(--white);
+	transition: width 0.45s cubic-bezier(.4,0,.2,1);
+	border-radius: 0 2px 2px 0;
+}
+
+/* ── Screens ── */
+.pq-screen {
+	width: 100%;
+	max-width: 600px;
+	display: none;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.pq-screen.pq-active {
+	display: flex;
+	animation: pqIn .38s cubic-bezier(.4,0,.2,1) both;
+}
+
+.pq-screen.pq-out {
+	animation: pqOut .25s cubic-bezier(.4,0,.2,1) both;
+}
+
+@keyframes pqIn  {
+	from { opacity:0; transform:translateY(28px) }
+	to { opacity:1; transform:none }
+}
+
+@keyframes pqOut {
+	from { opacity:1; transform:none }
+	to { opacity:0; transform:translateY(-18px) }
+}
+
+/* ── Start screen ── */
+.pq-start {
+	align-items: flex-start;
+}
+
+.pq-eyebrow {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.55);
+}
+
+.pq-title {
+	font-size: clamp(28px,5vw,44px);
+	font-weight: 700;
+	color: var(--white);
+	line-height: 1.15;
+}
+
+.pq-subtitle {
+	font-size: clamp(14px,2.5vw,17px);
+	color: rgba(255,255,255,0.78);
+	line-height: 1.7;
+}
+
+/* ── Question screen ── */
+.pq-q-header {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.pq-q-num {
+	background: var(--white);
+	color: var(--bg);
+	font-size: 14px;
+	font-weight: 700;
+	border-radius: 4px;
+	width: 28px;
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	margin-top: 3px;
+}
+
+.pq-q-text {
+	font-size: clamp(18px,3vw,24px);
+	color: var(--white);
+	font-weight: 400;
+	line-height: 1.45;
+}
+
+/* ── Options ── */
+.pq-options {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.pq-option {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	background: var(--opt-bg);
+	border: 1px solid var(--opt-border);
+	border-radius: 10px;
+	padding: 10px 15px;
+	cursor: pointer;
+	font-family: var(--font);
+	color: var(--white);
+	text-align: left;
+	width: 100%;
+	max-width: 280px;
+	transition: background .18s, border-color .18s, transform .1s;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.pq-option:hover {
+	background: var(--opt-hover-bg);
+	border-color: rgba(255,255,255,0.35);
+}
+
+.pq-option:active {
+	transform: scale(.975);
+}
+
+.pq-option.pq-selected {
+	background: var(--opt-sel-bg);
+	border-color: var(--white);
+}
+
+.pq-badge {
+	background: var(--badge-bg);
+	border: 1px solid var(--opt-border);
+	border-radius: 6px;
+	width: 27px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--white);
+	transition: background .18s, color .18s, border-color .18s;
+}
+
+.pq-option.pq-selected .pq-badge {
+	background: var(--white);
+	color: var(--bg);
+	border-color: var(--white);
+}
+
+.pq-option-label {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+/* ── Buttons ── */
+.pq-btn-row {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.pq-btn-controls {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+}
+
+.pq-btn-back {
+	background: rgba(255,255,255,0.15);
+	color: var(--white);
+	border: 1px solid rgba(255,255,255,0.25);
+	border-radius: 12px;
+	padding: 10px 16px;
+	font-size: 16px;
+	font-weight: 700;
+	font-family: var(--font);
+	cursor: pointer;
+	transition: opacity .18s, transform .15s, background .18s;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.pq-btn-back:not(:disabled) {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.pq-btn-back:not(:disabled):hover {
+	background: rgba(255,255,255,0.25);
+	transform: scale(1.02);
+}
+
+.pq-btn-back:not(:disabled):active {
+	transform: scale(.96);
+}
+
+.pq-btn-ok {
+	background: var(--white);
+	color: var(--bg);
+	border: none;
+	border-radius: 12px;
+	padding: 10px 20px;
+	font-size: 18px;
+	font-weight: 700;
+	font-family: var(--font);
+	cursor: pointer;
+	width: 66px;
+	transition: opacity .18s, transform .15s;
+}
+
+.pq-btn-ok:disabled {
+	opacity: .38;
+	cursor: not-allowed;
+}
+
+.pq-btn-ok:not(:disabled):hover {
+	opacity: .88;
+	transform: scale(1.04);
+}
+
+.pq-btn-ok:not(:disabled):active {
+	transform: scale(.96);
+}
+
+.pq-kbd-hint {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	flex-wrap: wrap;
+}
+
+.pq-kbd {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255,255,255,0.10);
+	border: 1px solid rgba(255,255,255,0.22);
+	border-radius: 4px;
+	padding: 1px 7px;
+	font-size: 11px;
+	color: rgba(255,255,255,0.55);
+	font-family: var(--font);
+}
+
+.pq-hint-text {
+	font-size: 11px;
+	color: rgba(255,255,255,0.38);
+}
+
+/* ── Result screen ── */
+.pq-result-tag {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.55);
+}
+
+.pq-result-title {
+	font-size: clamp(20px,3.5vw,30px);
+	font-weight: 700;
+	color: var(--white);
+	line-height: 1.25;
+}
+
+.pq-result-body {
+	font-size: clamp(14px,2.5vw,16px);
+	color: rgba(255,255,255,0.85);
+	line-height: 1.75;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.pq-result-body p {
+	margin: 0;
+}
+
+.pq-btn-primary {
+	background: var(--white);
+	color: var(--bg);
+	border: none;
+	border-radius: 12px;
+	padding: 13px 32px;
+	font-size: 17px;
+	font-weight: 700;
+	font-family: var(--font);
+	cursor: pointer;
+	transition: opacity .18s, transform .15s;
+	align-self: flex-start;
+}
+
+.pq-btn-primary:hover {
+	opacity: .88;
+	transform: scale(1.03);
+}
+
+.pq-btn-primary:active {
+	transform: scale(.97);
+}
+
+/* ── Divider ── */
+.pq-divider {
+	width: 48px;
+	height: 2px;
+	background: rgba(255,255,255,0.25);
+	border-radius: 1px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+	#prep-quiz {
+		padding: 80px 24px 48px;
+		justify-content: flex-start;
+	}
+
+	.pq-option {
+		max-width: 100%;
+	}
+
+	.pq-option-label {
+		font-size: 16px;
+	}
+
+	.pq-btn-ok {
+		font-size: 16px;
+	}
+
+	.pq-btn-controls {
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 380px) {
+	.pq-kbd-hint {
+		display: none;
+	}
+}
+
+/* Load Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
