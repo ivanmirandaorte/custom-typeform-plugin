@@ -4,7 +4,7 @@
  * Plugin Name: PrEP Eligibility Quiz
  * Description: An interactive PrEP eligibility screening tool. Use shortcode [prep_quiz] to display.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: ahfweb
  * License: GPL v2 or later
  * Text Domain: prep-quiz
  * Domain Path: /languages
