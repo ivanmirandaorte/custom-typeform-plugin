@@ -54,15 +54,6 @@ function prep_quiz_shortcode()
             <div class="pq-progress-fill" id="pq-prog-fill" style="width:0%"></div>
         </div>
 
-        <!-- ── START ── -->
-        <div class="pq-screen pq-start pq-active" id="pq-start">
-            <p class="pq-eyebrow">HIV Prevention Screening</p>
-            <h1 class="pq-title">PrEP Eligibility Quiz</h1>
-            <div class="pq-divider"></div>
-            <p class="pq-subtitle">Answer 8 short questions to find out if Pre-Exposure Prophylaxis (PrEP) may be right for you. This is a confidential screening tool — no personal data is stored or transmitted.</p>
-            <button class="pq-btn-primary" id="pq-btn-start">Start Quiz &rarr;</button>
-        </div>
-
         <!-- ── QUESTION ── -->
         <div class="pq-screen" id="pq-question">
             <div class="pq-q-header">

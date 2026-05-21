@@ -45,7 +45,6 @@
 	var answerHistory = []; // Track answers for back navigation
 
 	/* ── Elements ── */
-	var scStart    = document.getElementById('pq-start');
 	var scQuestion = document.getElementById('pq-question');
 	var scResult   = document.getElementById('pq-result');
 	var progFill   = document.getElementById('pq-prog-fill');
@@ -55,7 +54,6 @@
 	var elOpts     = document.getElementById('pq-opts');
 	var btnOk      = document.getElementById('pq-btn-ok');
 	var btnBack    = document.getElementById('pq-btn-back');
-	var btnStart   = document.getElementById('pq-btn-start');
 	var btnRetake  = document.getElementById('pq-btn-retake');
 	var elResTitle = document.getElementById('pq-res-title');
 	var elResBody  = document.getElementById('pq-res-body');
@@ -69,7 +67,7 @@
 
 	/* ── Screen transitions ── */
 	function switchScreen(next) {
-		var screens = [scStart, scQuestion, scResult];
+		var screens = [scQuestion, scResult];
 		var current = screens.find(function (s) { return s.classList.contains('pq-active'); });
 
 		if (current === next) return;
@@ -204,6 +202,9 @@
 		switchScreen(scQuestion);
 	}
 
+	/* Initialize by going directly to first question */
+	reset();
+
 	/* ── Keyboard ── */
 	document.addEventListener('keydown', function (e) {
 		if (!scQuestion.classList.contains('pq-active')) return;
@@ -216,7 +217,6 @@
 	});
 
 	/* ── Events ── */
-	btnStart.addEventListener('click',  reset);
 	btnOk.addEventListener('click',     advance);
 	btnBack.addEventListener('click',   goBack);
 	btnRetake.addEventListener('click', reset);
