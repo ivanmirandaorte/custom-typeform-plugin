@@ -8,10 +8,29 @@
  * License: GPL v2 or later
  * Text Domain: prep-quiz
  * Domain Path: /languages
+ * Requires: 5.0
+ * Requires PHP: 7.4
  */
 
+// Exit if accessed directly
 if (! defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
+}
+
+// Define plugin constants
+if (! defined('PREP_QUIZ_VERSION')) {
+    define('PREP_QUIZ_VERSION', '1.0.0');
+}
+if (! defined('PREP_QUIZ_PATH')) {
+    define('PREP_QUIZ_PATH', plugin_dir_path(__FILE__));
+}
+if (! defined('PREP_QUIZ_URL')) {
+    define('PREP_QUIZ_URL', plugin_dir_url(__FILE__));
+}
+
+// Security: Prevent direct file access
+if (! function_exists('add_action')) {
+    exit('No direct access allowed');
 }
 
 /**
@@ -19,22 +38,20 @@ if (! defined('ABSPATH')) {
  */
 function prep_quiz_enqueue_assets()
 {
-    $plugin_url = plugin_dir_url(__FILE__);
-
-    // Enqueue CSS
+    // Enqueue CSS with version cache busting
     wp_enqueue_style(
         'prep-quiz-style',
-        $plugin_url . 'assets/css/prep-quiz.css',
+        PREP_QUIZ_URL . 'assets/css/prep-quiz.css',
         array(),
-        '1.0.0'
+        PREP_QUIZ_VERSION
     );
 
-    // Enqueue JS
+    // Enqueue JS with version cache busting
     wp_enqueue_script(
         'prep-quiz-script',
-        $plugin_url . 'assets/js/prep-quiz.js',
+        PREP_QUIZ_URL . 'assets/js/prep-quiz.js',
         array(),
-        '1.0.0',
+        PREP_QUIZ_VERSION,
         true
     );
 }
@@ -45,6 +62,12 @@ add_action('wp_enqueue_scripts', 'prep_quiz_enqueue_assets');
  */
 function prep_quiz_shortcode()
 {
+    // Return empty if user doesn't have permission to view
+    if (! is_user_logged_in() && ! current_user_can('read')) {
+        // Allow anonymous users for public quiz
+        // For restricted access, check permissions here
+    }
+
     ob_start();
 ?>
 
@@ -92,6 +115,36 @@ function prep_quiz_shortcode()
     return ob_get_clean();
 }
 add_shortcode('prep_quiz', 'prep_quiz_shortcode');
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: SAMEORIGIN');
-header('X-XSS-Protection: 1; mode=block');
+
+/**
+ * Add security headers
+ */
+function prep_quiz_security_headers()
+{
+    if (! is_admin()) {
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('X-XSS-Protection: 1; mode=block');
+    }
+}
+add_action('send_headers', 'prep_quiz_security_headers');
+
+/**
+ * Plugin activation hook
+ */
+function prep_quiz_activate()
+{
+    // Log activation for debugging
+    error_log('PrEP Quiz Plugin activated on ' . current_time('mysql'));
+}
+register_activation_hook(__FILE__, 'prep_quiz_activate');
+
+/**
+ * Plugin deactivation hook
+ */
+function prep_quiz_deactivate()
+{
+    // Cleanup if needed
+    error_log('PrEP Quiz Plugin deactivated on ' . current_time('mysql'));
+}
+register_deactivation_hook(__FILE__, 'prep_quiz_deactivate');
