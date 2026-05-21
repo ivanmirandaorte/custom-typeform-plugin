@@ -92,3 +92,6 @@ function prep_quiz_shortcode()
     return ob_get_clean();
 }
 add_shortcode('prep_quiz', 'prep_quiz_shortcode');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-XSS-Protection: 1; mode=block');
