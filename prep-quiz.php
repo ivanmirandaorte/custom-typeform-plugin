@@ -75,14 +75,14 @@ function prep_quiz_shortcode()
                     <button class="pq-btn-back" id="pq-btn-back" aria-label="Go to previous question">← Back</button>
                     <button class="pq-btn-ok" id="pq-btn-ok" disabled aria-label="Confirm answer">OK</button>
                 </div>
-                <div class="pq-kbd-hint" aria-hidden="true">
+                <!-- <div class="pq-kbd-hint" aria-hidden="true">
                     <span class="pq-kbd">A</span>
                     <span class="pq-kbd">B</span>
                     <span class="pq-kbd">C</span>
                     <span class="pq-hint-text">to select &nbsp;&bull;&nbsp;</span>
                     <span class="pq-kbd">Enter</span>
                     <span class="pq-hint-text">to confirm</span>
-                </div>
+                </div> -->
             </div>
         </div>
 
